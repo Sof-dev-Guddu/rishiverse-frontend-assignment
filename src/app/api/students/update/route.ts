@@ -1,8 +1,8 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import axios from "axios";
 import { withAuth } from "@/lib/withAuth";
 
-async function updateStudent(req: Request) {
+async function updateStudent(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const id = searchParams.get("id");
 

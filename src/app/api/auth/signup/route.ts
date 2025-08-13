@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import axios from "axios";
 import bcrypt from "bcrypt";
+import { User } from "@/types/auth";
 
 export async function POST(req: Request) {
   const body = await req.json();
@@ -13,17 +14,17 @@ export async function POST(req: Request) {
   const normalizedEmail = email.trim().toLowerCase();
 
   try {
-    let existing: any[] = [];
+    let existing: User[] = [];
 
     try {
       const res = await axios.get(`${process.env.MOCKAPI_URL}/users`, {
         params: { email: normalizedEmail },
       });
       existing = res.data;
-    } catch (err: any) {
-      if (err.response && err.response.status === 404) {
-        // No user found — MockAPI returns 404
-        existing = [];
+    } catch (err: unknown) {
+       if (axios.isAxiosError(err) && err.response?.status === 404) {
+    // No user found — MockAPI returns 404
+    existing = [];
       } else {
         throw err; // Other errors should still break
       }

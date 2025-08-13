@@ -1,8 +1,9 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import axios from "axios";
 import { withAuth } from "@/lib/withAuth";
+import { Student } from "@/types/students";
 
-async function deleteStudent(req: Request, user: any) {
+async function deleteStudent(req: NextRequest,  student: Student) {
   const { searchParams } = new URL(req.url);
   const id = searchParams.get("id");
 

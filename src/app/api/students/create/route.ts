@@ -1,11 +1,11 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import axios from "axios";
 import { withAuth } from "@/lib/withAuth";
 
-async function createStudent(req: Request) {
+async function createStudent(req: NextRequest) {
   try {
     const body = await req.json();
-    const { name, discipline, email, img } = body;
+    const { name, discipline, email } = body;
 
     if (!name || !discipline || !email) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
