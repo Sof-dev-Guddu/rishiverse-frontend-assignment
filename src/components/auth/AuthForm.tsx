@@ -54,12 +54,18 @@ const AuthForm: React.FC<AuthFormProps> = ({ mode }) => {
         router.push('/dashboard'); 
       } else if (mode === 'signup') {
         reset(); // clear signup form
-        
+        router.push("/login")
       }
     }
   }, [authState.user, authState.token, mode, router, reset]);
 
-  
+  //redirect after succesful signup
+  useEffect(() => {
+  if (authState.signupSuccess && mode === 'signup') {
+    reset();
+    router.push('/login');
+  }
+}, [authState.signupSuccess, mode, router, reset]);
   const signupErrors = errors as FieldErrors<SignupFormData>;
 
   return (

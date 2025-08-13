@@ -58,7 +58,7 @@ const handleScroll = useCallback(() => {
 
  
   const handleCardClick = (id: string) => {
-    router.push(`/dashboard/students/${id}`);
+    router.push(`/dashboard/students/${id}?isAdmin=${isAdmin}`);
   };
 
   // Cancel delete dialog

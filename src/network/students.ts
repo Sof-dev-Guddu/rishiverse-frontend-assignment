@@ -6,12 +6,12 @@ interface ResponseT<T = any> {
   error: string | null;
 }
 
-const baseUrl = '/students'; 
+
 
 export async function getStudents(): Promise<ResponseT<Student[]>> {
   try {
     const { data } = await apiClient.get<Student[]>(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/students/read`,
+      `/api/students/read`,
     )
     return { response: data, error: null };
   } catch (err: any) {
@@ -21,7 +21,7 @@ export async function getStudents(): Promise<ResponseT<Student[]>> {
 
 export async function getStudentById(id: string | number): Promise<ResponseT<Student>> {
   try {
-    const { data } = await apiClient.get<Student>(`${baseUrl}/${id}`);
+    const { data } = await apiClient.get<Student>(`/api/students/readOne/${id}`);
     return { response: data, error: null };
   } catch (err: any) {
     return { response: null, error: err.message || String(err) };
@@ -31,7 +31,7 @@ export async function getStudentById(id: string | number): Promise<ResponseT<Stu
 export async function addStudent(student: Student): Promise<ResponseT<Student>> {
   try {
     const { data } = await apiClient.post<Student>(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/students/create`,student
+      `/api/students/create`,student
     );
     return { response: data, error: null };
   } catch (err: any) {
@@ -41,7 +41,7 @@ export async function addStudent(student: Student): Promise<ResponseT<Student>> 
 
 export async function updateStudent(student: Student): Promise<ResponseT<Student>> {
   try {
-    const { data } = await apiClient.put<Student>(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/students/update/?id=${student.id}`, student);
+    const { data } = await apiClient.put<Student>(`/api/students/update/?id=${student.id}`, student);
     return { response: data, error: null };
   } catch (err: any) {
     return { response: null, error: err.message || String(err) };
@@ -50,7 +50,7 @@ export async function updateStudent(student: Student): Promise<ResponseT<Student
 
 export async function deleteStudent(id: string | number): Promise<ResponseT<null>> {
   try {
-    await apiClient.delete(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/students/delete/?id=${id}`);
+    await apiClient.delete(`/api/students/delete/?id=${id}`);
     return { response: null, error: null };
   } catch (err: any) {
     return { response: null, error: err.message || String(err) };

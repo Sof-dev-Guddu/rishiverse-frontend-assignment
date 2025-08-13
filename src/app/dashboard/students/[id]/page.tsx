@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useMemo } from "react";
-import { useParams, useRouter } from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { useAppSelector, useAppDispatch } from "@/store/hooks"; 
 import { openDialog } from "@/store/features/students/studentSlice";
 import LoadingSkeleton from "@/components/shared/loader/LoaderSkeleton";
@@ -11,6 +11,8 @@ import { SidebarTrigger } from "@/components/ui/sidebar";
 
 export default function StudentDetailsPage() {
   const params = useParams<{ id: string }>();
+   const searchParams = useSearchParams();
+    const isAdmin = searchParams.get("isAdmin") === "true";
   const router = useRouter();
 
   const { students, loading, errors } = useAppSelector((state) => state.students);
@@ -72,9 +74,11 @@ export default function StudentDetailsPage() {
           ← Back
         </button>
         <div>
+          {isAdmin && 
           <GradientButton onClick={() => dispatch(openDialog({ mode: "edit", data: student }))}>
             Edit Details
           </GradientButton>
+          }
         </div>
       </div>
 
