@@ -62,17 +62,19 @@ export default function AddUpdateStudentDialog() {
   }, [initialData, methods]);
 
   const onSubmit = (data: StudentDetails) => {
-    const submissionData = {
+  if (mode === "add") {
+    dispatch(createStudent({
       ...data,
       createdAT: new Date().toISOString(),
-    };
-
-    if (mode === "add") {
-      dispatch(createStudent(submissionData));
-    } else if (mode === "edit" && initialData) {
-      dispatch(updateStudentThunk({ ...initialData, ...submissionData }));
-    }
-  };
+    }));
+  } else if (mode === "edit" && initialData) {
+    dispatch(updateStudentThunk({
+      ...initialData,
+      ...data,
+      createdAT: initialData.createdAT, // keep original creation date
+    }));
+  }
+};
 
   return (
     <Dialog key={mode} open={isOpen} onOpenChange={() => dispatch(closeDialog(mode))}>

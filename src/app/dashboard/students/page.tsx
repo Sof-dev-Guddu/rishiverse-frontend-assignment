@@ -10,10 +10,12 @@ import StudentCardList from "@/components/features/students/student-card-lists/S
 import { openDialog } from "@/store/features/students/studentSlice";
 import GradientButton from "@/components/shared/button/GradientButton";
 import FilterDropdown from "@/components/features/students/filter-student/FilterDropdown";
+import {  useAppSelector } from "@/store/hooks";
 
 function Page() {
   const [isAdmin, setIsAdmin] = useState(false);
   const dispatch = useDispatch<AppDispatch>();
+  const {students} =useAppSelector((state)=>state.students)
 
   useEffect(() => {
     dispatch(fetchStudents());
@@ -36,7 +38,8 @@ function Page() {
             <SortStudent />
             <FilterDropdown/>
            </div>
-           <div>
+           <div className="flex items-center gap-2">
+            < p className="px-2 text-lg md:text-2xl">Total Students : {students.length}</p>
             {isAdmin && (
           <GradientButton
             onClick={() => dispatch(openDialog({ mode: "add" }))}

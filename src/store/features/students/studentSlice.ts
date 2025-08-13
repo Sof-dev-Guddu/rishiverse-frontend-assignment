@@ -157,14 +157,16 @@ const studentSlice = createSlice({
       })
       .addCase(createStudent.fulfilled, (state, action) => {
         state.students.unshift(action.payload);
+        
         state.loading = false;
         state.dialog = { isOpen: false, mode: 'add', initialData: null };
-         state.finalStudents = computeFinalStudents(
-          state.students,
-          state.filters,
-          state.sortOption,
-          state.pagination
-        );
+         const tempSort = 'createdAt-desc';
+  state.finalStudents = computeFinalStudents(
+    state.students,
+    state.filters,
+    tempSort,
+    state.pagination
+  );
         toast.success('Student has been created.');
       })
       .addCase(createStudent.rejected, (state, action) => {

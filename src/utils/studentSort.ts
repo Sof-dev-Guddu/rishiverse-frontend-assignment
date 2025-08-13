@@ -14,9 +14,10 @@ export function sortStudents(students: Student[], sortOption: string): Student[]
       case 'createdAt-desc':
         return new Date(b.createdAT).getTime() - new Date(a.createdAT).getTime();
       default:
-        return 0;
+        return new Date(b.createdAT).getTime() - new Date(a.createdAT).getTime();
     }
   });
 
   return result;
 }
+

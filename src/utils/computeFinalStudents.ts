@@ -11,7 +11,7 @@ export function computeFinalStudents(
   pagination: PaginationState
 ): Student[] {
   const filtered = filterStudents(students, filters);
-  const sorted = sortStudents(filtered, sortOption);
+  const sorted = sortStudents(filtered, sortOption ||"");
   const paginated = paginateStudents(sorted, pagination.itemsToShow);
   return paginated;
 }
